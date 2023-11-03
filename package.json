@@ -17,9 +17,6 @@
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "lint-and-fix": "eslint . --ext .ts --fix"
   },
-  "files": [
-    "dist/**/*"
-  ],
   "prettier": {
     "editorconfig": true,
     "semi": true,
