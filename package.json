@@ -10,7 +10,7 @@
     "node": ">18.14.0"
   },
   "files": [
-    "dist/**/*"
+    "./dist/**/*"
   ],
   "scripts": {
     "build": "npm run compile",
