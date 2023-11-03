@@ -51,7 +51,10 @@
     "object-hash": "^3.0.0",
     "textile-js": "^2.1.1",
     "turndown": "^7.1.2",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "cheerio": "^1.0.0-rc.12",
+    "html-to-text": "^9.0.5",
+    "jsdom": "^22.1.0"
   },
   "devDependencies": {
     "@ava/typescript": "^4.1.0",
@@ -80,10 +83,5 @@
     "prettier": "^2.8.8",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.0"
-  },
-  "peerDependencies": {
-    "cheerio": "^1.0.0-rc.12",
-    "html-to-text": "^9.0.5",
-    "jsdom": "^22.1.0"
   }
 }
