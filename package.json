@@ -2,6 +2,7 @@
   "name": "mangler",
   "version": "0.0.1",
   "description": "Jeff's big bin of format mangling utilities.",
+  "main": "./dist/index.js",
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
