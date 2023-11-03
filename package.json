@@ -12,7 +12,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "npm run clean; npm run compile",
+    "build": "npm run compile",
     "test": "ava",
     "clean": "rm -rf ./dist;rm *.tsbuildinfo",
     "compile": "tsc -p ./tsconfig.build.json",
