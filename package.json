@@ -10,9 +10,10 @@
     "node": ">18.14.0"
   },
   "files": [
-    "./dist/**/*"
+    "dist/**/*"
   ],
   "scripts": {
+    "prepare": "npm run build",
     "build": "npm run compile",
     "test": "ava",
     "clean": "rm -rf ./dist;rm *.tsbuildinfo",
