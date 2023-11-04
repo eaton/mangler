@@ -45,17 +45,18 @@
   "author": "Jeff Eaton <jeff@autogram.is> (http://eaton.fyi/)",
   "license": "MIT",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
     "cheerio-json-mapper": "^1.0.3",
     "date-fns": "^2.30.0",
+    "fs-jetpack": "^5.1.0",
     "gray-matter": "^4.0.3",
+    "html-to-text": "^9.0.5",
+    "jsdom": "^22.1.0",
     "marked": "^9.1.4",
     "object-hash": "^3.0.0",
     "textile-js": "^2.1.1",
     "turndown": "^7.1.2",
-    "uuid": "^9.0.1",
-    "cheerio": "^1.0.0-rc.12",
-    "html-to-text": "^9.0.5",
-    "jsdom": "^22.1.0"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@ava/typescript": "^4.1.0",
