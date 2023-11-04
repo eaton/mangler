@@ -41,12 +41,6 @@ export const schemas = {
 
   default: [
     { type: 'block' },
-    { type: 'image' },
-  ],
-
-  noImages: [
-    { type: 'block' },
-    { type: 'image' },
   ],
 
   styledText: [{
