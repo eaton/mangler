@@ -1,28 +1,9 @@
+import is from '@sindresorhus/is';
 import * as cheerio from 'cheerio';
 import { cheerioJsonMapper, getScope, PipeFnMap, JsonTemplate } from 'cheerio-json-mapper'
-import is from '@sindresorhus/is';
 
-export type { HtmlToTextOptions } from 'html-to-text';
 export type CheerioInput = Parameters<typeof cheerio.load>[0];
 export type CheerioExtractTemplate = JsonTemplate;
-
-export { htmlToText as toText } from 'html-to-text';
-
-/**
- * An extremely naive linebreaks-to-paragraph-tags conversion function.
- */
-export function linesToParagraphs(input: string, brTags = true) {
-  // By default, replace BR tags with double-linebreaks
-  const text = brTags ? input.replaceAll(/<br*>/ig, '\n\n') : input;
-  return text
-    .split(/(\s*\n){2,}/g)            // split on multiple linebreaks
-    .filter(t => t.trim().length > 0)  // filter blank lines
-    .map(t => '<p>' + t + '</p>')     // wrap in paragraph tags
-    .join('\n');                      // join with single linebreaks
-}
-
-// Convenience formatter
-export { linesToParagraphs as l2p }
 
 /**
  * A simple wrapper for Cheerio's `load` function

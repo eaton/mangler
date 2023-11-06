@@ -13,7 +13,7 @@ export { toHTML as toHtml } from '@portabletext/to-html'
  * newlines are collapsed to whitespace.
  */
 export function fromText(input: string) {
-  return fromHtml(Html.linesToParagraphs(input), schemas.plainText);
+  return fromHtml(Html.fromText(input, { urls: false }), schemas.plainText);
 }
 
 /**
