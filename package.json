@@ -59,6 +59,7 @@
     "object-hash": "^3.0.0",
     "textile-js": "^2.1.1",
     "turndown": "^7.1.2",
+    "url-unshort": "^6.1.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

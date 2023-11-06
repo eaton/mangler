@@ -1,4 +1,4 @@
-import entities from 'entities';
+import * as entities from 'entities';
 import humanizeUrl from 'humanize-url';
 import linkifyUrls from 'linkify-urls';
 
