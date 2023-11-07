@@ -22,3 +22,11 @@ test('mixed urls', async t => {
   );
 });
 
+test('already linkified', async t => {
+  const input = '<a href="https://example.com">example.com</a>';
+  t.is(
+    Urls.linkify(input),
+    '<a href="https://example.com">example.com</a>'
+  );
+});
+
