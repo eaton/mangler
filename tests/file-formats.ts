@@ -1,5 +1,5 @@
 import test from 'ava';
-import { Tsv, NdJson } from '../src/index.js';
+import { Tsv, NdJson, Frontmatter } from '../src/index.js';
 
 test('ndjson lifecycle', t => {
   const input = [
@@ -26,5 +26,21 @@ test('tsv arrays', t => {
   ];
   const serialized = Tsv.stringify(input);
   t.deepEqual(Tsv.parse(serialized, false), input);
+});
+
+test('frontmatter roundtrip', t => {
+  const input = {
+    data: {
+      title: 'title',
+      date: '2000-01-01',
+      layout: 'page',
+      tags: ['tag1', 'tag2'],
+    },
+    content: 'Full content\n',
+    excerpt: '',
+    isEmpty: false,
+  };
+  const serialized = Frontmatter.stringify(input);
+  t.deepEqual(Frontmatter.parse(serialized), input);
 });
 
