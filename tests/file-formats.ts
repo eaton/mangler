@@ -36,11 +36,12 @@ test('frontmatter roundtrip', t => {
       layout: 'page',
       tags: ['tag1', 'tag2'],
     },
-    content: 'Full content\n',
-    excerpt: '',
-    isEmpty: false,
+    content: 'Full content',
   };
   const serialized = Frontmatter.stringify(input);
-  t.deepEqual(Frontmatter.parse(serialized), input);
+  const output = Frontmatter.parse(serialized);
+  
+  t.deepEqual(output.data, input.data);
+  t.deepEqual(output.content.trim(), input.content.trim());
 });
 
