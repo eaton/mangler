@@ -1,6 +1,5 @@
 import * as entities from 'entities';
-import humanizeUrl from 'humanize-url';
-import linkifyUrls from 'linkify-urls';
+import { Urls  } from '../../index.js';
 
 export interface TextToHtmlOptions {
   /**
@@ -28,7 +27,7 @@ export interface TextToHtmlOptions {
 /**
  * Extremely simple conversion of plaintext to HTML:
  * 
- * - Special characaters are encoded
+ * - Special characters are encoded
  * - Multiple sequential newlines are treated as paragraph separators
  * - URLs are linkified
  * 
@@ -66,7 +65,7 @@ export function fromText(text: string, options: TextToHtmlOptions) {
   }
 
   if (opt.urls) {
-    output = linkifyUrls(output, { value: (url) => humanizeUrl(url) });
+    output = Urls.linkify(output);
   }
 
   return output;
