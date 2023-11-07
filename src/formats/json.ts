@@ -1,3 +1,4 @@
+import { JsonMap } from '@iarna/toml/index.js';
 import { FileFormat } from './file-format.js';
 import JSON5 from 'json5';
 
@@ -13,12 +14,12 @@ export const Json5: FileFormat = {
   stringify: JSON5.stringify
 };
 
-export const NdJson: FileFormat = {
+export const NdJson: FileFormat<JsonMap[]> = {
   extensions: ['ndjson'],
 
-  parse: function <T = unknown>(data: string): T[] {
+  parse: function (data: string) {
     const lines = data.trim().split('\n');
-    return lines.map((line) => JSON.parse(line)) as T[];
+    return lines.map((line) => JSON.parse(line));
   },
 
   stringify: function (data: unknown[]): string {
