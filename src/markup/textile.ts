@@ -1,6 +1,6 @@
 import pkg from 'textile-js';
 const { parse } = pkg;
-import { toText as htmlToText } from './html/index.js'
+import { toText as htmlToText } from './html/index.js';
 
 export function toHtml(input: string) {
   return parse(input);

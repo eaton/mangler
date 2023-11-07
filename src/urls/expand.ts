@@ -1,6 +1,9 @@
-import Unshort, { UnshortOptions } from "url-unshort";
+import Unshort, { UnshortOptions } from 'url-unshort';
 
-export async function expand(url: string | string[], options: UnshortOptions = {}): Promise<Record<string, string>> {
+export async function expand(
+  url: string | string[],
+  options: UnshortOptions = {},
+): Promise<Record<string, string>> {
   const urls = Array.isArray(url) ? url : [url];
   const output: Record<string, string> = {};
 

@@ -1,15 +1,15 @@
-import { Schema } from '@sanity/schema'
+import { Schema } from '@sanity/schema';
 import { ArraySchemaType } from '@sanity/types';
 import { htmlToBlocks, normalizeBlock } from '@sanity/block-tools';
 import { JSDOM } from 'jsdom';
 import { Html } from '../index.js';
 
-export { toPlainText as toText } from '@portabletext/toolkit'
-export { toHTML as toHtml } from '@portabletext/to-html'
+export { toPlainText as toText } from '@portabletext/toolkit';
+export { toHTML as toHtml } from '@portabletext/to-html';
 
 /**
  * Converts plain text into a collection of unstyled PortableText
- * blocks. Double newlines (`\n\n`) form new paragraphs, single 
+ * blocks. Double newlines (`\n\n`) form new paragraphs, single
  * newlines are collapsed to whitespace.
  */
 export function fromText(input: string) {
@@ -24,61 +24,61 @@ export function fromText(input: string) {
 export function fromHtml(input: string, schema?: Record<string, unknown>[]) {
   schema ??= schemas.default;
 
-  const blocks = htmlToBlocks(
-    input,
-    buildSchema(schema),
-    { parseHtml: (html) => new JSDOM(html).window.document }
-  );
-  return blocks.map(b => normalizeBlock(b));
+  const blocks = htmlToBlocks(input, buildSchema(schema), {
+    parseHtml: (html) => new JSDOM(html).window.document,
+  });
+  return blocks.map((b) => normalizeBlock(b));
 }
 
 type SanityField = Record<string, unknown> & {
-  name: string,
-  type: ArraySchemaType<unknown>,
-}
+  name: string;
+  type: ArraySchemaType<unknown>;
+};
 
 export const schemas = {
+  default: [{ type: 'block' }],
 
-  default: [
-    { type: 'block' },
+  styledText: [
+    {
+      type: 'block',
+      styles: [{ title: 'Normal', value: 'normal' }],
+      lists: [],
+      marks: {
+        decorators: [
+          { title: 'Strong', value: 'strong' },
+          { title: 'Emphasis', value: 'em' },
+        ],
+      },
+    },
   ],
 
-  styledText: [{
-    type: 'block',
-    styles: [{ title: 'Normal', value: 'normal' }],
-    lists: [],
-    marks: {
-      decorators: [
-        { title: 'Strong', value: 'strong' },
-        { title: 'Emphasis', value: 'em' }
-      ],
-    }
-  }],
+  styledTextNoLinks: [
+    {
+      type: 'block',
+      styles: [{ title: 'Normal', value: 'normal' }],
+      lists: [],
+      marks: {
+        decorators: [
+          { title: 'Strong', value: 'strong' },
+          { title: 'Emphasis', value: 'em' },
+        ],
+        annotations: [],
+      },
+    },
+  ],
 
-  styledTextNoLinks: [{
-    type: 'block',
-    styles: [{ title: 'Normal', value: 'normal' }],
-    lists: [],
-    marks: {
-      decorators: [
-        { title: 'Strong', value: 'strong' },
-        { title: 'Emphasis', value: 'em' }
-      ],
-      annotations: []
-    }
-  }],
-
-
-  plainText: [{
-    type: 'block',
-    styles: [{ title: 'Normal', value: 'normal' }],
-    lists: [],
-    marks: {
-      decorators: [],
-      annotations: [],
-    }
-  }]
-}
+  plainText: [
+    {
+      type: 'block',
+      styles: [{ title: 'Normal', value: 'normal' }],
+      lists: [],
+      marks: {
+        decorators: [],
+        annotations: [],
+      },
+    },
+  ],
+};
 
 /**
  * Takes an array of Sanity Studio PortableText block descriptions,

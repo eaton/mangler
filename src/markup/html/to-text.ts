@@ -4,4 +4,3 @@
 
 export type { HtmlToTextOptions } from 'html-to-text';
 export { htmlToText as toText } from 'html-to-text';
-

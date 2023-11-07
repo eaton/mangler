@@ -1,5 +1,5 @@
 import { parse } from 'marked';
-import { toText as htmlToText } from './html/index.js'
+import { toText as htmlToText } from './html/index.js';
 import TurndownService from 'turndown';
 
 export function toHtml(input: string) {

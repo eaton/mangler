@@ -15,9 +15,7 @@ export interface Options extends SplitOptions {
  * Convert a string to space separated lower case (`foo bar`).
  */
 export function noCase(input: string, options?: Options) {
-  return split(input, options)
-    .map(lowerFactory(options?.locale))
-    .join(" ");
+  return split(input, options).map(lowerFactory(options?.locale)).join(' ');
 }
 
 // Regexps involved with splitting words in various case formats.
@@ -30,7 +28,7 @@ const SPLIT_LETTER_NUMBER_RE = /(\p{L})(\d)/gu;
 const DEFAULT_STRIP_REGEXP = /[^\p{L}\d]+/giu;
 
 // The replacement value for splits.
-const SPLIT_REPLACE_VALUE = "$1\0$2";
+const SPLIT_REPLACE_VALUE = '$1\0$2';
 
 export interface SplitOptions {
   separateNumbers?: boolean;
@@ -50,15 +48,15 @@ export function split(input: string, options: SplitOptions = {}) {
       .replace(SPLIT_LETTER_NUMBER_RE, SPLIT_REPLACE_VALUE);
   }
 
-  result = result.replace(DEFAULT_STRIP_REGEXP, "\0");
+  result = result.replace(DEFAULT_STRIP_REGEXP, '\0');
 
   let start = 0;
   let end = result.length;
 
   // Trim the delimiter from around the output string.
-  while (result.charAt(start) === "\0") start++;
+  while (result.charAt(start) === '\0') start++;
   if (start === end) return [];
-  while (result.charAt(end - 1) === "\0") end--;
+  while (result.charAt(end - 1) === '\0') end--;
 
   // Transform each token independently.
   return result.slice(start, end).split(/\0/g);
@@ -76,7 +74,7 @@ export function camelCase(input: string, options?: Options) {
       if (index === 0) return lower(word);
       return transform(word, index);
     })
-    .join("");
+    .join('');
 }
 
 /**
@@ -87,7 +85,7 @@ export function pascalCase(input: string, options?: Options) {
   const upper = upperFactory(options?.locale);
   return split(input, options)
     .map(pascalCaseTransformFactory(lower, upper))
-    .join("");
+    .join('');
 }
 
 /**
@@ -98,7 +96,7 @@ export function pascalSnakeCase(input: string, options?: Options) {
   const upper = upperFactory(options?.locale);
   return split(input, options)
     .map(capitalCaseTransformFactory(lower, upper))
-    .join("_");
+    .join('_');
 }
 
 /**
@@ -109,7 +107,7 @@ export function capitalCase(input: string, options?: Options) {
   const upper = upperFactory(options?.locale);
   return split(input, options)
     .map(capitalCaseTransformFactory(lower, upper))
-    .join(" ");
+    .join(' ');
 }
 
 /**
@@ -117,7 +115,7 @@ export function capitalCase(input: string, options?: Options) {
  */
 export function constantCase(input: string, options?: Options) {
   const upper = upperFactory(options?.locale);
-  return split(input, options).map(upper).join("_");
+  return split(input, options).map(upper).join('_');
 }
 
 /**
@@ -125,7 +123,7 @@ export function constantCase(input: string, options?: Options) {
  */
 export function dotCase(input: string, options?: Options) {
   const lower = lowerFactory(options?.locale);
-  return split(input, options).map(lower).join(".");
+  return split(input, options).map(lower).join('.');
 }
 
 /**
@@ -133,7 +131,7 @@ export function dotCase(input: string, options?: Options) {
  */
 export function kebabCase(input: string, options?: Options) {
   const lower = lowerFactory(options?.locale);
-  return split(input, options).map(lower).join("-");
+  return split(input, options).map(lower).join('-');
 }
 
 /**
@@ -141,7 +139,7 @@ export function kebabCase(input: string, options?: Options) {
  */
 export function pathCase(input: string, options?: Options) {
   const lower = lowerFactory(options?.locale);
-  return split(input, options).map(lower).join("/");
+  return split(input, options).map(lower).join('/');
 }
 
 /**
@@ -156,7 +154,7 @@ export function sentenceCase(input: string, options?: Options) {
       if (index === 0) return transform(word);
       return lower(word);
     })
-    .join(" ");
+    .join(' ');
 }
 
 /**
@@ -164,7 +162,7 @@ export function sentenceCase(input: string, options?: Options) {
  */
 export function snakeCase(input: string, options?: Options) {
   const lower = lowerFactory(options?.locale);
-  return split(input, options).map(lower).join("_");
+  return split(input, options).map(lower).join('_');
 }
 
 /**
@@ -175,7 +173,7 @@ export function trainCase(input: string, options?: Options) {
   const upper = upperFactory(options?.locale);
   return split(input, options)
     .map(capitalCaseTransformFactory(lower, upper))
-    .join("-");
+    .join('-');
 }
 
 function lowerFactory(locale: Locale): (input: string) => string {
@@ -204,7 +202,7 @@ function pascalCaseTransformFactory(
   return (word: string, index: number) => {
     const char0 = word[0];
     const initial =
-      index > 0 && char0 >= "0" && char0 <= "9" ? "_" + char0 : upper(char0);
+      index > 0 && char0 >= '0' && char0 <= '9' ? '_' + char0 : upper(char0);
     return initial + lower(word.slice(1));
   };
 }
