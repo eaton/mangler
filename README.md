@@ -14,6 +14,13 @@ mangling utilities.
 - uuid()
 - nanoid()
 
+## Formats
+
+- Csv/Tsv
+- Json/NdJson/Json5
+- Ini
+- Frontmatter (yaml and json)
+
 ## Markup
 
 - Contentful
