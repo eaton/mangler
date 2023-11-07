@@ -7,10 +7,12 @@ mangling utilities.
 
 - reformat()
 - fromOffset()
+- All the stuff from date-fns
 
 ## Ids
 
 - uuid()
+- nanoid()
 
 ## Markup
 
@@ -19,18 +21,22 @@ mangling utilities.
   - toText()
   - fromMarkdown()
 - Html
-  - linesToParagraphs()
+  - fromText()
   - toText()
   - toCheerio()
   - extract()
 - Markdown
-  - fromHtml
-  - toHtml
-  - toText
+  - fromHtml()
+  - toHtml()
+  - toText()
 - PortableText
-  - fromText
-  - fromHtml
-
+  - fromText()
+  - fromHtml()
+- Livejournal
+  - cutTeaser()
+  - cutBody()
+  - userToLink()
+  
 ## Misfits
 
 - Php
@@ -43,3 +49,13 @@ mangling utilities.
 - snakeCase()
 - pascalCase()
 - capitalCase()
+
+## Urls
+
+- find()
+- linkify()
+- expand()
+
+## Other Stuff
+
+- fs-jetpack
