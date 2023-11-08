@@ -1,5 +1,5 @@
-export interface FileFormat {
+export interface FileFormat<T = unknown> {
   extensions: string[];
-  parse(data: string): unknown;
-  stringify(data: unknown): string;
+  parse(data: string, ...args: unknown[]): T;
+  stringify(data: unknown, ...args: unknown[]): string;
 }
