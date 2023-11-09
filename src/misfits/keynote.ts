@@ -161,14 +161,13 @@ export class Keynote {
   }
 
   async exportAll(directory = 'output') {
-    const k = new Keynote();
-    const deck = await k.deckInfo(true);
-    await k.loadSlides();
+    const deck = await this.deckInfo(true);
+    await this.loadSlides();
 
     // Need to pass along the output directory to these exports
-    await k.export({ format: 'PDF' });
-    await k.export({ format: 'PDF', exportStyle: 'SlideWithNotes' });
-    await k.export({ format: 'slide images' });
+    await this.export({ format: 'PDF' });
+    await this.export({ format: 'PDF', exportStyle: 'SlideWithNotes' });
+    await this.export({ format: 'slide images' });
 
     const output = fs.dir(directory).dir(deck.name.replace('.key', ''));
     output.file('deck.json', { content: deck, jsonIndent: 2 });
