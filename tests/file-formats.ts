@@ -1,5 +1,5 @@
 import test from 'ava';
-import { Tsv, NdJson, Frontmatter } from '../src/index.js';
+import { Tsv, NdJson, Frontmatter, Plist } from '../src/index.js';
 
 test('ndjson lifecycle', t => {
   const input = [
@@ -26,6 +26,15 @@ test('tsv arrays', t => {
   ];
   const serialized = Tsv.stringify(input);
   t.deepEqual(Tsv.parse(serialized, false), input);
+});
+
+test('plist lifecycle', t => {
+  const input = [
+    { key: 'string1', value: 12345 },
+    { key: 'string2', value: 67890 },
+  ];
+  const serialized = Plist.stringify(input);
+  t.deepEqual(Plist.parse(serialized), input);
 });
 
 test('frontmatter roundtrip', t => {

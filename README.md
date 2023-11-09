@@ -19,6 +19,7 @@ mangling utilities.
 - Csv/Tsv
 - Json/NdJson/Json5
 - Ini
+- Plist
 - Frontmatter (yaml and json)
 
 ## Markup

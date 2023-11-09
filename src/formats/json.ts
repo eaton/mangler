@@ -14,6 +14,15 @@ export const Json5: FileFormat = {
   stringify: JSON5.stringify
 };
 
+/**
+ * Note that we use a relatively inefficient all-at-once approach to parsing
+ * NDJson here. NDJson is newline delimited precisely so that it can be processed
+ * as a stream, so this is suboptimal even though it generates correct output.
+ * 
+ * That said, the parse/stringify nomenclature fits our quick-and-dirty approach
+ * to file format handling, so it's a win for now. Just don't lean on it for any
+ * performance intensive stuff.
+ */
 export const NdJson: FileFormat<JsonMap[]> = {
   extensions: ['ndjson'],
 
