@@ -43,6 +43,14 @@ export interface KeynoteExportOptions {
 export class Keynote {
   private _deck: DeckInfo | undefined;
 
+  private constructor() {};
+
+  static async open(file: string) {
+    const k = new Keynote();
+    await k.open(file);
+    return k;
+  }
+
   async open(file: string) {
     await runAppleScript(`tell application "Keynote" to open the POSIX file "${file}"`)
       .then(() => this.deckInfo(true));
