@@ -246,6 +246,3 @@ export class Keynote {
     }));
   }
 }
-
-const file = '/Users/jeff/Library/Mobile Documents/com~apple~Keynote/Documents/2021/Confab - How Content Learns.key';
-await Keynote.open(file).then(k => k.export())
