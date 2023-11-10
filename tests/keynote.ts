@@ -9,7 +9,7 @@ test('keynote opens and exports', async t => {
   t.assert(k.file === path);
   t.assert(k.slides.length === 2);  
 
-  await k.export({ path: output.path() });
+  await k.export({ path: output.path(), format: 'JSON with images' });
   t.assert(output.exists('deck.json') === 'file');
   t.assert(output.exists('images') === 'dir');
 
