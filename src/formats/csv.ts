@@ -12,12 +12,26 @@ const parseOpt: ParseOptions = {
 
 export const Csv: FileFormat = {
   extensions: ['csv'],
-  parse: (data: string, columns: boolean = true) => parse(data, { ...parseOpt, delimiter: ',', columns } ),
-  stringify: (input: unknown[]) => stringify(input, { ...stringifyOpt, delimiter: ',', objectMode: is.plainObject(input[0]), header: is.plainObject(input[0]) })
+  parse: (data: string, columns: boolean = true) =>
+    parse(data, { ...parseOpt, delimiter: ',', columns }),
+  stringify: (input: unknown[]) =>
+    stringify(input, {
+      ...stringifyOpt,
+      delimiter: ',',
+      objectMode: is.plainObject(input[0]),
+      header: is.plainObject(input[0]),
+    }),
 };
 
 export const Tsv: FileFormat = {
   extensions: ['tsv'],
-  parse: (data: string, columns: boolean = true) => parse(data, { ...parseOpt, delimiter: '\t', columns }),
-  stringify: (input: unknown[]) => stringify(input, { ...stringifyOpt, delimiter: '\t', objectMode: is.plainObject(input[0]), header: is.plainObject(input[0]) })
+  parse: (data: string, columns: boolean = true) =>
+    parse(data, { ...parseOpt, delimiter: '\t', columns }),
+  stringify: (input: unknown[]) =>
+    stringify(input, {
+      ...stringifyOpt,
+      delimiter: '\t',
+      objectMode: is.plainObject(input[0]),
+      header: is.plainObject(input[0]),
+    }),
 };

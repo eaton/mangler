@@ -21,15 +21,45 @@ export interface KeynoteDeck {
   slides: KeynoteSlide[];
 }
 
-export type KeynoteExportFormat = 'JSON' | 'JSON with images' | 'HTML' | 'QuickTime movie' | 'PDF' | 'slide images' | 'Microsoft PowerPoint' | 'Keynote 09';
+export type KeynoteExportFormat =
+  | 'JSON'
+  | 'JSON with images'
+  | 'HTML'
+  | 'QuickTime movie'
+  | 'PDF'
+  | 'slide images'
+  | 'Microsoft PowerPoint'
+  | 'Keynote 09';
 
 export interface KeynoteExportOptions {
   path?: string;
   format?: KeynoteExportFormat;
   imageFormat?: 'JPEG' | 'PNG' | 'TIFF';
-  movieFormat?: 'format360p' | 'format540p' | 'format720p' | 'format1080p' | 'format2160p' | 'native size';
-  movieCodec?: 'h264' | 'AppleProRes422' | 'AppleProRes4444' | 'AppleProRes422LT' | 'AppleProRes422HQ' | 'AppleProRes422Proxy' | 'HEVC';
-  movieFramerate?: 'FPS12' | 'FPS2398' | 'FPS24' | 'FPS25' | 'FPS2997' | 'FPS30' | 'FPS50' | 'FPS5994' | 'FPS60';
+  movieFormat?:
+    | 'format360p'
+    | 'format540p'
+    | 'format720p'
+    | 'format1080p'
+    | 'format2160p'
+    | 'native size';
+  movieCodec?:
+    | 'h264'
+    | 'AppleProRes422'
+    | 'AppleProRes4444'
+    | 'AppleProRes422LT'
+    | 'AppleProRes422HQ'
+    | 'AppleProRes422Proxy'
+    | 'HEVC';
+  movieFramerate?:
+    | 'FPS12'
+    | 'FPS2398'
+    | 'FPS24'
+    | 'FPS25'
+    | 'FPS2997'
+    | 'FPS30'
+    | 'FPS50'
+    | 'FPS5994'
+    | 'FPS60';
   exportStyle?: 'IndividualSlides' | 'SlideWithNotes' | 'Handouts';
   allStages?: boolean;
   skippedSlides?: boolean;
@@ -46,7 +76,7 @@ export interface KeynoteExportOptions {
 export class Keynote {
   protected deck?: KeynoteDeck;
 
-  protected constructor() {};
+  protected constructor() {}
 
   static async open(file: string) {
     return new Keynote().open(file);
@@ -100,13 +130,13 @@ export class Keynote {
       open the POSIX file "${file}"
       return id of front document
     end tell
-    `).then(id => this._getDeckInfo(id));
+    `).then((id) => this._getDeckInfo(id));
     return Promise.resolve(this);
   }
 
   async refresh() {
     if (this.deck) {
-      return this._getDeckInfo(this.deck.id).then(deck => {
+      return this._getDeckInfo(this.deck.id).then((deck) => {
         this.deck = deck;
         return true;
       });
@@ -117,7 +147,9 @@ export class Keynote {
 
   async close() {
     if (this.deck) {
-      return runAppleScript(`tell application "Keynote" to close document id "${this.deck?.id}"`).then(() => true);
+      return runAppleScript(
+        `tell application "Keynote" to close document id "${this.deck?.id}"`,
+      ).then(() => true);
     } else {
       return Promise.resolve(false);
     }
@@ -130,7 +162,7 @@ export class Keynote {
       exportStyle: 'IndividualSlides',
       imageFormat: 'JPEG',
       skippedSlides: false,
-    }
+    };
 
     let { path: dir, format, ...opt } = { ...defaults, ...options };
     let cwd = fs.dir(dir);
@@ -139,12 +171,14 @@ export class Keynote {
     if (format === 'JSON' || 'JSON with images') {
       const json = {
         ...this.deck,
-        slides: this.slides.filter(s => options.skippedSlides || (s.skipped === false))
-      }
+        slides: this.slides.filter(
+          (s) => options.skippedSlides || s.skipped === false,
+        ),
+      };
       cwd.file('deck.json', { content: json });
       if (format === 'JSON with images') {
         format = 'slide images';
-      } else { 
+      } else {
         return Promise.resolve(cwd.path('deck.json'));
       }
     }
@@ -167,21 +201,26 @@ export class Keynote {
         break;
     }
 
-    // Construct the applescript snippet    
+    // Construct the applescript snippet
     let scr = '';
     scr += `tell application "Keynote"\n`;
     scr += `  set deck to document id "${this.id}"\n`;
-    scr += `  set the current slide of deck to slide 1 of deck\n`
+    scr += `  set the current slide of deck to slide 1 of deck\n`;
     scr += `  export deck as ${format} to POSIX file "${cwd.path()}"`;
     if (Object.entries(opt).length) {
-      scr += ' with properties { ' + Object.entries(opt).map(([k, v]) => Text.noCase(k) + ':' + v).join(', ') + ' }\n';
+      scr +=
+        ' with properties { ' +
+        Object.entries(opt)
+          .map(([k, v]) => Text.noCase(k) + ':' + v)
+          .join(', ') +
+        ' }\n';
     }
     scr += `end tell`;
     return runAppleScript(scr);
   }
 
   protected async _getDeckInfo(id: string): Promise<KeynoteDeck> {
-    const valDelimiter = "";
+    const valDelimiter = '';
     const deck: KeynoteDeck = await runAppleScript(`
       set i to "${id}"
       set valueDelim to "${valDelimiter}"
@@ -199,8 +238,7 @@ export class Keynote {
         set AppleScript's text item delimiters to valueDelim
         return v as string
       end tell
-    `)
-    .then(result => {
+    `).then((result) => {
       const [id, name, file, theme, height, width] = result.split(valDelimiter);
       return {
         id,
@@ -209,7 +247,7 @@ export class Keynote {
         theme,
         height: Number.parseInt(height),
         width: Number.parseInt(width),
-        slides: []
+        slides: [],
       };
     });
     deck.slides = await this._getSlides(id);
@@ -217,8 +255,8 @@ export class Keynote {
   }
 
   protected async _getSlides(id: string) {
-    const slideDelimiter = "";
-    const valDelimiter = "";
+    const slideDelimiter = '';
+    const valDelimiter = '';
 
     return runAppleScript(`
       set i to "${id}"
@@ -246,17 +284,20 @@ export class Keynote {
         return sd as string
       end tell
     `)
-    .then(result => result.split(slideDelimiter))
-    .then(slides => slides.map(slide => {
-      const [number, skipped, layout, title, body, notes] = slide.split(valDelimiter);
-      return {
-        number: Number.parseInt(number),
-        skipped: skipped === 'true',
-        layout,
-        title,
-        body,
-        notes
-      };
-    }));
+      .then((result) => result.split(slideDelimiter))
+      .then((slides) =>
+        slides.map((slide) => {
+          const [number, skipped, layout, title, body, notes] =
+            slide.split(valDelimiter);
+          return {
+            number: Number.parseInt(number),
+            skipped: skipped === 'true',
+            layout,
+            title,
+            body,
+            notes,
+          };
+        }),
+      );
   }
 }
