@@ -21,7 +21,7 @@ export interface KeynoteDeck {
   slides: KeynoteSlide[];
 }
 
-export type KeynoteExportFormat = 'HTML' | 'QuickTime movie' | 'PDF' | 'slide images' | 'Microsoft PowerPoint' | 'Keynote 09';
+export type KeynoteExportFormat = 'JSON' | 'HTML' | 'QuickTime movie' | 'PDF' | 'slide images' | 'Microsoft PowerPoint' | 'Keynote 09';
 
 export interface KeynoteExportOptions {
   path?: string;
@@ -52,7 +52,7 @@ export class Keynote {
     return new Keynote().open(file);
   }
 
-  static async quit(file: string) {
+  static async quit() {
     return runAppleScript('tell application "Keynote" to quit')
       .then(() => true)
       .catch(() => false);
@@ -126,14 +126,24 @@ export class Keynote {
   async export(options: KeynoteExportOptions = {}) {
     const defaults = {
       path: path.resolve('.', this.title),
-      format: 'slide images',
+      format: 'JSON',
       exportStyle: 'IndividualSlides',
       imageFormat: 'JPEG',
       skippedSlides: false,
     }
 
-    const { path: dir, format, ...opt } = { ...defaults, ...options };
+    let { path: dir, format, ...opt } = { ...defaults, ...options };
     let cwd = fs.dir(dir);
+
+    // JSON format is equivalent to 'slide images' with an extra JSON sidecar.
+    if (format === 'JSON') {
+      const json = {
+        ...this.deck,
+        slides: this.slides.filter(s => options.skippedSlides || (s.skipped === false))
+      }
+      cwd.file('deck.json', { content: json });
+      format = 'slide images';
+    }
 
     switch (format) {
       case 'slide images':
