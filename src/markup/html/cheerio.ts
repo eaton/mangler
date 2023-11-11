@@ -39,7 +39,6 @@ const pipeFns: PipeFnMap = {
   shift: ({ value }) => (Array.isArray(value) ? value.shift() : void 0),
   pop: ({ value }) => (Array.isArray(value) ? value.pop() : void 0),
   index: ({ value, args }) => {
-    console.log(value, args);
     if (Array.isArray(value)) {
       const [idx] = args ?? [];
       if (is.numericString(idx)) {

@@ -169,14 +169,14 @@ export class Keynote {
     let cwd = fsJetpack.dir(dir);
 
     // JSON format formats aren't part of the official spec, but what the hey.
-    if (format === 'JSON' || 'JSON with images') {
+    if (format === 'JSON' || format === 'JSON with images') {
       const json = {
         ...this.deck,
         slides: this.slides.filter((s) => options.skippedSlides || s.skipped === false)
       };      
       if (format === 'JSON with images') {
         json.slides = json.slides.map((s) => {
-          s.image = `./images/images.${s.number.toString().padStart(3, '0')}.${options.imageFormat}`;
+          s.image = `./images/images.${s.number.toString().padStart(3, '0')}.${opt.imageFormat}`;
           return s;
         });
         cwd.file('deck.json', { content: json });
@@ -187,21 +187,22 @@ export class Keynote {
       }
     }
 
+    let outputPath = cwd.path();
     switch (format) {
       case 'slide images':
-        cwd = cwd.dir('images');
+        outputPath = cwd.dir('images').path();
         break;
       case 'HTML':
-        cwd = cwd.dir('html');
+        outputPath = cwd.dir('html').path();
         break;
       case 'PDF':
-        cwd = cwd.file(opt.exportStyle + '.pdf');
+        outputPath = cwd.path(opt.exportStyle + '.pdf');
         break;
       case 'Keynote 09':
-        cwd = cwd.file(opt.exportStyle + '.key');
+        outputPath = cwd.path(opt.exportStyle + '.key');
         break;
       case 'Microsoft PowerPoint':
-        cwd = cwd.file(opt.exportStyle + '.pptx');
+        outputPath = cwd.path(opt.exportStyle + '.pptx');
         break;
     }
 
@@ -210,7 +211,7 @@ export class Keynote {
     scr += `tell application "Keynote"\n`;
     scr += `  set deck to document id "${this.id}"\n`;
     scr += `  set the current slide of deck to slide 1 of deck\n`;
-    scr += `  export deck as ${format} to POSIX file "${cwd.path()}"`;
+    scr += `  export deck as ${format} to POSIX file "${outputPath}"`;
     if (Object.entries(opt).length) {
       scr +=
         ' with properties { ' +
