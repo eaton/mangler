@@ -10,4 +10,5 @@ import jetpack from 'fs-jetpack';
  *
  * For now, though, jetpack's the way to go.
  */
-export const fs = jetpack;
+
+export const fsJetpack = jetpack;

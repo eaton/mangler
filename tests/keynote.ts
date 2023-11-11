@@ -1,9 +1,9 @@
 import test from 'ava';
-import { Keynote, fs } from "../src/index.js";
+import { Keynote, fsJetpack } from "../src/index.js";
 
 test('keynote opens and exports', async t => {
-  const path = fs.dir('tests/fixtures').path('test.key');
-  const output = fs.dir('tests/output/keynote');
+  const path = fsJetpack.dir('tests/fixtures').path('test.key');
+  const output = fsJetpack.dir('tests/output/keynote');
 
   const k = await Keynote.open(path);
   t.assert(k.file === path);

@@ -50,13 +50,13 @@ mangling utilities.
 - Php
   - serialize()
   - deserialize()
+- Keynote
 
 ## Text
 
-- camelCase()
-- snakeCase()
-- pascalCase()
-- capitalCase()
+- toCase()
+- toSlug()
+- toFilename()
 
 ## Urls
 
@@ -66,4 +66,9 @@ mangling utilities.
 
 ## Other Stuff
 
-- fs-jetpack
+- fsJetpack
+  - dir()
+  - file()
+  - write()
+  - read()
+  - find()

@@ -1,6 +1,6 @@
 import path from 'path';
 import { runAppleScript } from 'run-applescript';
-import { Text, fs } from '../index.js';
+import { Text, fsJetpack } from '../index.js';
 
 export interface KeynoteSlide {
   number: number;
@@ -165,7 +165,7 @@ export class Keynote {
     };
 
     let { path: dir, format, ...opt } = { ...defaults, ...options };
-    let cwd = fs.dir(dir);
+    let cwd = fsJetpack.dir(dir);
 
     // JSON format formats aren't part of the official spec, but what the hey.
     if (format === 'JSON' || 'JSON with images') {
@@ -211,7 +211,7 @@ export class Keynote {
       scr +=
         ' with properties { ' +
         Object.entries(opt)
-          .map(([k, v]) => Text.noCase(k) + ':' + v)
+          .map(([k, v]) => Text.toCase(k, 'no') + ':' + v)
           .join(', ') +
         ' }\n';
     }
