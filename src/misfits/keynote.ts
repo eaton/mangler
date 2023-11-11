@@ -62,6 +62,7 @@ export interface KeynoteExportOptions {
     | 'FPS5994'
     | 'FPS60';
   exportStyle?: 'IndividualSlides' | 'SlideWithNotes' | 'Handouts';
+  compressionFactor?: number,
   allStages?: boolean;
   skippedSlides?: boolean;
   borders?: boolean;
@@ -222,6 +223,45 @@ export class Keynote {
     }
     scr += `end tell`;
     return runAppleScript(scr);
+  }
+
+
+  /**
+   * Export the animation for a single slide. This currently DOES NOT WORK,
+   * because there's no way to specify the start and stop slides or animation
+   * durations when exporting as a Quicktime Movie.
+   */
+  async exportSlideAnimation(slide: number, additionalSlides = 0, options: KeynoteExportOptions = {}) {
+    const defaults: KeynoteExportOptions = {
+      path: path.resolve('.', this.title),
+      skippedSlides: false,
+      format: 'QuickTime movie',
+      movieCodec: 'h264',
+      movieFormat: 'format720p',
+      movieFramerate: 'FPS24',
+      allStages: true,
+    };
+
+    let { path: dir, format, ...opt } = { ...defaults, ...options };
+    const outputDir = fsJetpack.dir(dir ?? '.').dir('images');
+
+    // Construct the applescript snippet
+    let scr = '';
+    scr += `tell application "Keynote"\n`;
+    scr += `  set deck to document id "${this.id}"\n`;
+    scr += `  set the current slide of deck to slide 1 of deck\n`;
+    scr += `  export deck as ${format} to POSIX file "${outputDir.path()}/${slide.toString().padStart(3, '0')}.m4v"`;
+    if (Object.entries(opt).length) {
+      scr +=
+        ' with properties { ' +
+        Object.entries(opt)
+          .map(([k, v]) => Text.toCase.none(k) + ':' + v)
+          .join(', ') +
+        ' }\n';
+    }
+    scr += `end tell`;
+    // return runAppleScript(scr);
+    return Promise.resolve(scr);
   }
 
   protected async _getDeckInfo(id: string): Promise<KeynoteDeck> {

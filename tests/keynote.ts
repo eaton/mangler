@@ -39,3 +39,18 @@ test.serial('pdf export', async t => {
 
   return output.removeAsync();
 });
+
+test.skip('single slide movie', async t => {
+  const path = fsJetpack.dir('tests/fixtures').path('test.key');
+  const output = fsJetpack.dir('tests/output/keynote');
+
+  const k = await Keynote.open(path);
+  const script = await k.exportSlideAnimation(2, 0, { path: output.path() });
+  console.log(script);
+  t.assert(script !== undefined);
+
+  t.assert(await k.close());
+  t.assert(await Keynote.quit());
+
+  return output.removeAsync();
+});
