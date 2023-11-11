@@ -54,7 +54,9 @@ mangling utilities.
 
 ## Text
 
-- toCase()
+- toCase
+  - camel()
+  - kabob()
 - toSlug()
 - toFilename()
 

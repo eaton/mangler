@@ -6,7 +6,7 @@ export {
   titleCase as title,
   pathCase as path,
   snakeCase as snake,
-  paramCase as param,
+  paramCase as kabob,
   dotCase as dot,
   noCase as none,
   constantCase as constant,
@@ -17,4 +17,11 @@ export {
   sentenceCase as sentence,
 } from 'text-case';
 
-// Additional novelty cases go here
+// Inefficient but amusing
+export function random(input: string) {
+  let output = '';
+  for (const c of input) {
+    output += Math.round(Math.random()) === 1 ? c.toLocaleLowerCase() : c.toLocaleUpperCase()
+  }
+  return output;
+}
