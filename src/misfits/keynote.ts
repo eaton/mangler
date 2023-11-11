@@ -9,6 +9,7 @@ export interface KeynoteSlide {
   title: string;
   body: string;
   notes: string;
+  image?: string,
 }
 
 export interface KeynoteDeck {
@@ -171,9 +172,13 @@ export class Keynote {
     if (format === 'JSON' || 'JSON with images') {
       const json = {
         ...this.deck,
-        slides: this.slides.filter(
-          (s) => options.skippedSlides || s.skipped === false,
-        ),
+        // Filter out hidden slides and add image files
+        slides: this.slides
+          .filter((s) => options.skippedSlides || s.skipped === false)
+          .map((s) => {
+            s.image = `./images/${s.number.toString().padStart(4, '0')}.${options.imageFormat}`;
+            return s;
+          }),
       };
       cwd.file('deck.json', { content: json });
       if (format === 'JSON with images') {
