@@ -211,7 +211,7 @@ export class Keynote {
       scr +=
         ' with properties { ' +
         Object.entries(opt)
-          .map(([k, v]) => Text.toCase(k, 'no') + ':' + v)
+          .map(([k, v]) => Text.toCase.none(k) + ':' + v)
           .join(', ') +
         ' }\n';
     }
