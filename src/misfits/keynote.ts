@@ -176,7 +176,7 @@ export class Keynote {
       };      
       if (format === 'JSON with images') {
         json.slides = json.slides.map((s) => {
-          s.image = `./images/${s.number.toString().padStart(4, '0')}.${options.imageFormat}`;
+          s.image = `./images/images.${s.number.toString().padStart(4, '0')}.${options.imageFormat}`;
           return s;
         });
         cwd.file('deck.json', { content: json });
