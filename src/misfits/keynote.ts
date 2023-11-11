@@ -172,18 +172,17 @@ export class Keynote {
     if (format === 'JSON' || 'JSON with images') {
       const json = {
         ...this.deck,
-        // Filter out hidden slides and add image files
-        slides: this.slides
-          .filter((s) => options.skippedSlides || s.skipped === false)
-          .map((s) => {
-            s.image = `./images/${s.number.toString().padStart(4, '0')}.${options.imageFormat}`;
-            return s;
-          }),
-      };
-      cwd.file('deck.json', { content: json });
+        slides: this.slides.filter((s) => options.skippedSlides || s.skipped === false)
+      };      
       if (format === 'JSON with images') {
+        json.slides = json.slides.map((s) => {
+          s.image = `./images/${s.number.toString().padStart(4, '0')}.${options.imageFormat}`;
+          return s;
+        });
+        cwd.file('deck.json', { content: json });
         format = 'slide images';
       } else {
+        cwd.file('deck.json', { content: json });
         return Promise.resolve(cwd.path('deck.json'));
       }
     }
