@@ -40,6 +40,18 @@ test.serial('pdf export', async t => {
   return output.removeAsync();
 });
 
+test.skip('alter notes', async t => {
+  const path = fsJetpack.dir('tests/fixtures').path('test.key');
+  const k = await Keynote.open(path);
+  const oldNotes = k.slides[0].notes;
+  
+  t.notThrowsAsync(k.setNotes(1, 'Updated notes'));
+  await k.setNotes(1, oldNotes);
+
+  t.assert(await k.close());
+  t.assert(await Keynote.quit());
+});
+
 test.skip('single slide movie', async t => {
   const path = fsJetpack.dir('tests/fixtures').path('test.key');
   const output = fsJetpack.dir('tests/output/keynote');
