@@ -12,8 +12,8 @@ export { toHTML as toHtml } from '@portabletext/to-html';
  * blocks. Double newlines (`\n\n`) form new paragraphs, single
  * newlines are collapsed to whitespace.
  */
-export function fromText(input: string) {
-  return fromHtml(Html.fromText(input, { urls: false }), schemas.plainText);
+export function fromText(input: string, blockType?: string) {
+  return fromHtml(Html.fromText(input, { urls: false }), schemas.plainText, blockType);
 }
 
 /**
@@ -21,13 +21,13 @@ export function fromText(input: string) {
  * tags are supported: h1-h6, blockquote, em, strong, a, and img. Images
  * are treated as standalone paragraphs.
  */
-export function fromHtml(input: string, schema?: Record<string, unknown>[]) {
+export function fromHtml(input: string, schema?: Record<string, unknown>[], blockType?: string) {
   schema ??= schemas.default;
 
   const blocks = htmlToBlocks(input, buildSchema(schema), {
     parseHtml: (html) => new JSDOM(html).window.document,
   });
-  return blocks.map((b) => normalizeBlock(b));
+  return blocks.map((b) => normalizeBlock(b, { blockTypeName: blockType}));
 }
 
 type SanityField = Record<string, unknown> & {
