@@ -5,7 +5,7 @@ test.serial('open and parse', async t => {
   const path = fsJetpack.dir('tests/fixtures').path('test.key');
   const k = await Keynote.open(path);
   t.assert(k.file === path);
-  t.assert(k.slides.length === 2);
+  t.assert(k.slides.length === 3);
 
   t.assert(await k.close());
   t.assert(await Keynote.quit());
