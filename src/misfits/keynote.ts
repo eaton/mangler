@@ -173,7 +173,7 @@ export class Keynote {
     if (format === 'JSON' || format === 'JSON with images') {
       const json = {
         ...this.deck,
-        slides: this.slides.filter((s) => options.skippedSlides || s.skipped === false)
+        slides: this.slides.filter((s) => options.skippedSlides || s.skipped === false || s.number === -1)
       };      
       if (format === 'JSON with images') {
         json.slides = json.slides.map((s) => {
