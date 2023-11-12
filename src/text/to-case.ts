@@ -7,6 +7,7 @@ export {
   pathCase as path,
   snakeCase as snake,
   paramCase as kabob,
+  paramCase as kebab,
   dotCase as dot,
   noCase as none,
   constantCase as constant,
