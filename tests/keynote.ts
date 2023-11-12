@@ -40,7 +40,7 @@ test.serial('pdf export', async t => {
   return output.removeAsync();
 });
 
-test.skip('alter notes', async t => {
+test('alter notes', async t => {
   const path = fsJetpack.dir('tests/fixtures').path('test.key');
   const k = await Keynote.open(path);
   const oldNotes = k.slides[0].notes;
