@@ -159,7 +159,7 @@ export class Keynote {
 
   async export(options: KeynoteExportOptions = {}) {
     const defaults = {
-      path: path.resolve('.', this.title),
+      path: path.resolve('.', Text.toSlug(this.title)),
       format: 'JSON with images',
       exportStyle: 'IndividualSlides',
       imageFormat: 'JPEG',
