@@ -1,7 +1,7 @@
 import matter, { GrayMatterFile } from 'gray-matter';
-import { FileFormat } from './file-format.js';
+import { SimpleSerializer } from './simple-serializer.js';
 
-export const Frontmatter: FileFormat<GrayMatterFile<string>> = {
+export const Frontmatter: SimpleSerializer<GrayMatterFile<string>> = {
   extensions: ['md'],
   parse: (input: string) => matter(input),
   stringify: (

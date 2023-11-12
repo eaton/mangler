@@ -1,4 +1,4 @@
-import { FileFormat } from './file-format.js';
+import { SimpleSerializer } from './simple-serializer.js';
 import { stringify, Options as StringifyOptions } from 'csv-stringify/sync';
 import { parse, Options as ParseOptions } from 'csv-parse/sync';
 import is from '@sindresorhus/is';
@@ -10,7 +10,7 @@ const parseOpt: ParseOptions = {
   cast: true,
 };
 
-export const Csv: FileFormat = {
+export const Csv: SimpleSerializer = {
   extensions: ['csv'],
   parse: (data: string, columns: boolean = true) =>
     parse(data, { ...parseOpt, delimiter: ',', columns }),
@@ -23,7 +23,7 @@ export const Csv: FileFormat = {
     }),
 };
 
-export const Tsv: FileFormat = {
+export const Tsv: SimpleSerializer = {
   extensions: ['tsv'],
   parse: (data: string, columns: boolean = true) =>
     parse(data, { ...parseOpt, delimiter: '\t', columns }),

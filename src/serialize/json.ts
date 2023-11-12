@@ -1,14 +1,14 @@
 import { JsonMap } from '@iarna/toml/index.js';
-import { FileFormat } from './file-format.js';
+import { SimpleSerializer } from './simple-serializer.js';
 import JSON5 from 'json5';
 
-export const Json: FileFormat = {
+export const Json: SimpleSerializer = {
   extensions: ['json'],
   parse: JSON.parse,
   stringify: JSON.stringify,
 };
 
-export const Json5: FileFormat = {
+export const Json5: SimpleSerializer = {
   extensions: ['json5'],
   parse: JSON5.parse,
   stringify: JSON5.stringify,
@@ -23,7 +23,7 @@ export const Json5: FileFormat = {
  * to file format handling, so it's a win for now. Just don't lean on it for any
  * performance intensive stuff.
  */
-export const NdJson: FileFormat<JsonMap[]> = {
+export const NdJson: SimpleSerializer<JsonMap[]> = {
   extensions: ['ndjson'],
 
   parse: function (data: string) {
