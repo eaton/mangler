@@ -1,8 +1,8 @@
 import test from 'ava';
-import { Keynote, fsJetpack } from "../src/index.js";
+import { Keynote, Disk } from "../src/index.js";
 
 test.serial('open and parse', async t => {
-  const path = fsJetpack.dir('tests/fixtures').path('test.key');
+  const path = Disk.dir('tests/fixtures').path('test.key');
   const k = await Keynote.open(path);
   t.assert(k.file === path);
   t.assert(k.slides.length === 3);
@@ -12,8 +12,8 @@ test.serial('open and parse', async t => {
 });
 
 test.serial('json with images', async t => {
-  const path = fsJetpack.dir('tests/fixtures').path('test.key');
-  const output = fsJetpack.dir('tests/output/keynote');
+  const path = Disk.dir('tests/fixtures').path('test.key');
+  const output = Disk.dir('tests/output/keynote');
 
   const k = await Keynote.open(path);
   await k.export({ path: output.path(), format: 'JSON with images' });
@@ -27,8 +27,8 @@ test.serial('json with images', async t => {
 
 
 test.serial('pdf export', async t => {
-  const path = fsJetpack.dir('tests/fixtures').path('test.key');
-  const output = fsJetpack.dir('tests/output/keynote');
+  const path = Disk.dir('tests/fixtures').path('test.key');
+  const output = Disk.dir('tests/output/keynote');
 
   const k = await Keynote.open(path);
   await k.export({ path: output.path(), format: 'PDF', exportStyle: 'SlideWithNotes' });
@@ -41,7 +41,7 @@ test.serial('pdf export', async t => {
 });
 
 test('alter notes', async t => {
-  const path = fsJetpack.dir('tests/fixtures').path('test.key');
+  const path = Disk.dir('tests/fixtures').path('test.key');
   const k = await Keynote.open(path);
   const oldNotes = k.slides[0].notes;
   
@@ -53,8 +53,8 @@ test('alter notes', async t => {
 });
 
 test.skip('single slide movie', async t => {
-  const path = fsJetpack.dir('tests/fixtures').path('test.key');
-  const output = fsJetpack.dir('tests/output/keynote');
+  const path = Disk.dir('tests/fixtures').path('test.key');
+  const output = Disk.dir('tests/output/keynote');
 
   const k = await Keynote.open(path);
   const script = await k.exportSlideAnimation(2, 0, { path: output.path() });

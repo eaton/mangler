@@ -11,4 +11,4 @@ import jetpack from 'fs-jetpack';
  * For now, though, jetpack's the way to go.
  */
 
-export const fsJetpack = jetpack;
+export const Disk = jetpack;

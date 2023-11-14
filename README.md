@@ -1,7 +1,10 @@
 # Mangler
 
 An inefficient but comprehensive library of parsing, format conversion, and data
-mangling utilities.
+mangling utilities. Some of these (particularly stuff like the Keynote exporting
+tool) should be moved into their own projects. For now, though, 'mangler' is just
+the big ol' pile of stuff I add as a devDependency when I need to do some data
+wrangling.
 
 ## Dates
 
@@ -14,13 +17,16 @@ mangling utilities.
 - uuid()
 - nanoid()
 
-## Formats
+## Simple Serializers
 
 - Csv/Tsv
+- YAML
+- Frontmatter (yaml and json)
 - Json/NdJson/Json5
 - Ini
 - Plist
-- Frontmatter (yaml and json)
+- Base64
+- PHP serialize/unserialize
 
 ## Markup
 
@@ -45,16 +51,16 @@ mangling utilities.
   - cutBody()
   - userToLink()
   
-## Misfits
+## Complex file types
 
-- Php
-  - serialize()
-  - deserialize()
 - Keynote
+- PDF (very limited pdfjs wrapper; need to move to a custom one)
+- Image (via sharp library)
 
 ## Text
 
 - toCase
+  - title()
   - camel()
   - kabob()
 - toSlug()
@@ -68,7 +74,7 @@ mangling utilities.
 
 ## Other Stuff
 
-- fsJetpack
+- Disk
   - dir()
   - file()
   - write()

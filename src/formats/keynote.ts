@@ -1,6 +1,6 @@
 import path from 'path';
 import { runAppleScript } from 'run-applescript';
-import { Text, fsJetpack } from '../index.js';
+import { Text, Disk } from '../index.js';
 
 export interface KeynoteSlide {
   number: number;
@@ -167,7 +167,7 @@ export class Keynote {
     };
 
     let { path: dir, format, ...opt } = { ...defaults, ...options };
-    let cwd = fsJetpack.dir(dir);
+    let cwd = Disk.dir(dir);
 
     // JSON format formats aren't part of the official spec, but what the hey.
     if (format === 'JSON' || format === 'JSON with images') {
@@ -249,7 +249,7 @@ export class Keynote {
     };
 
     let { path: dir, format, ...opt } = { ...defaults, ...options };
-    const outputDir = fsJetpack.dir(dir ?? '.').dir('images');
+    const outputDir = Disk.dir(dir ?? '.').dir('images');
 
     // Construct the applescript snippet
     let scr = '';
