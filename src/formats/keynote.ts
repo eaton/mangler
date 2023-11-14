@@ -226,7 +226,7 @@ export class Keynote {
   }
 
   async setNotes(slide: number, text: string) {
-    let scr = `tell application "Keynote" to set the presenter notes of slide ${slide} of document id "${this.id} to "${text}"`;
+    let scr = `tell application "Keynote" to set the presenter notes of slide ${slide} of document id "${this.id}" to "${text}"`;
     const newNotes = await runAppleScript(scr);
     this.deck!.slides[slide].notes = newNotes;
     return Promise.resolve(newNotes);
