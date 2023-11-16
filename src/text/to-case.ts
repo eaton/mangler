@@ -22,7 +22,10 @@ export {
 export function random(input: string) {
   let output = '';
   for (const c of input) {
-    output += Math.round(Math.random()) === 1 ? c.toLocaleLowerCase() : c.toLocaleUpperCase()
+    output +=
+      Math.round(Math.random()) === 1
+        ? c.toLocaleLowerCase()
+        : c.toLocaleUpperCase();
   }
   return output;
 }

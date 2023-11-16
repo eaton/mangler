@@ -31,11 +31,12 @@ export async function extract<T extends string | JsonTemplate>(
   const htmlOrNode = input instanceof Buffer ? input.toString() : input;
   return cheerioJsonMapper(htmlOrNode, template, { pipeFns }).then(
     (results) => results as MappedReturn<T>,
-  )
+  );
 }
 
 const pipeFns: PipeFnMap = {
-  html: ({ $scope, selector, opts, value }) => getScope($scope, selector, opts).toString(),
+  html: ({ $scope, selector, opts, value }) =>
+    getScope($scope, selector, opts).toString(),
   shift: ({ value }) => (Array.isArray(value) ? value.shift() : void 0),
   pop: ({ value }) => (Array.isArray(value) ? value.pop() : void 0),
   index: ({ value, args }) => {

@@ -9,7 +9,7 @@ export interface KeynoteSlide {
   title: string;
   body: string;
   notes: string;
-  image?: string,
+  image?: string;
 }
 
 export interface KeynoteDeck {
@@ -62,7 +62,7 @@ export interface KeynoteExportOptions {
     | 'FPS5994'
     | 'FPS60';
   exportStyle?: 'IndividualSlides' | 'SlideWithNotes' | 'Handouts';
-  compressionFactor?: number,
+  compressionFactor?: number;
   allStages?: boolean;
   skippedSlides?: boolean;
   borders?: boolean;
@@ -173,11 +173,16 @@ export class Keynote {
     if (format === 'JSON' || format === 'JSON with images') {
       const json = {
         ...this.deck,
-        slides: this.slides.filter((s) => options.skippedSlides || s.skipped === false || s.number === -1)
-      };      
+        slides: this.slides.filter(
+          (s) =>
+            options.skippedSlides || s.skipped === false || s.number === -1,
+        ),
+      };
       if (format === 'JSON with images') {
         json.slides = json.slides.map((s) => {
-          s.image = `./images/images.${s.number.toString().padStart(3, '0')}.${opt.imageFormat}`;
+          s.image = `./images/images.${s.number.toString().padStart(3, '0')}.${
+            opt.imageFormat
+          }`;
           return s;
         });
         cwd.file('deck.json', { content: json });
@@ -237,7 +242,11 @@ export class Keynote {
    * because there's no way to specify the start and stop slides or animation
    * durations when exporting as a Quicktime Movie.
    */
-  async exportSlideAnimation(slide: number, additionalSlides = 0, options: KeynoteExportOptions = {}) {
+  async exportSlideAnimation(
+    slide: number,
+    additionalSlides = 0,
+    options: KeynoteExportOptions = {},
+  ) {
     const defaults: KeynoteExportOptions = {
       path: path.resolve('.', this.title),
       skippedSlides: false,
@@ -256,7 +265,9 @@ export class Keynote {
     scr += `tell application "Keynote"\n`;
     scr += `  set deck to document id "${this.id}"\n`;
     scr += `  set the current slide of deck to slide 1 of deck\n`;
-    scr += `  export deck as ${format} to POSIX file "${outputDir.path()}/${slide.toString().padStart(3, '0')}.m4v"`;
+    scr += `  export deck as ${format} to POSIX file "${outputDir.path()}/${slide
+      .toString()
+      .padStart(3, '0')}.m4v"`;
     if (Object.entries(opt).length) {
       scr +=
         ' with properties { ' +
