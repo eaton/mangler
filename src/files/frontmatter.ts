@@ -1,15 +1,12 @@
 import matter, { GrayMatterFile } from 'gray-matter';
-import { SimpleSerializer } from './simple-serializer.js';
+import { Serializer } from 'fs-jetpack/types';
 import jetpack from 'fs-jetpack';
+import { isObject } from '@sindresorhus/is';
 
-export const Frontmatter: SimpleSerializer<unknown, GrayMatterFile<string>> = {
-  extensions: ['md', 'markdown'],
-  validate: (data: unknown) => true,
+export const Frontmatter: Serializer<GrayMatterFile<string>, GrayMatterFile<string>> = {
+  validate: (data: unknown) => isObject(data),
   parse: (input: string) => matter(input),
-  stringify: (
-    input: GrayMatterFile<string>,
-    options: Record<string, unknown>,
-  ) => {
+  stringify: (input: GrayMatterFile<string>) => {
     const { content, data } = input;
     return matter.stringify(content, data);
   },

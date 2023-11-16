@@ -1,19 +1,15 @@
 import { JsonMap } from '@iarna/toml/index.js';
-import { SimpleSerializer } from './simple-serializer.js';
+import { Serializer } from 'fs-jetpack/types';
 import JSON5 from 'json5';
-import { isArray } from '@sindresorhus/is';
 import jetpack from 'fs-jetpack';
+import { isArray } from '@sindresorhus/is';
 
-export const Json: SimpleSerializer = {
-  extensions: ['json'],
-  validate: (data: unknown) => true,
+export const Json: Serializer = {
   parse: JSON.parse,
   stringify: JSON.stringify,
 };
 
-export const Json5: SimpleSerializer = {
-  extensions: ['json5'],
-  validate: (data: unknown) => true,
+export const Json5: Serializer = {
   parse: JSON5.parse,
   stringify: JSON5.stringify,
 };
@@ -27,14 +23,12 @@ export const Json5: SimpleSerializer = {
  * to file format handling, so it's a win for now. Just don't lean on it for any
  * performance intensive stuff.
  */
-export const NdJson: SimpleSerializer<unknown, JsonMap[]> = {
-  extensions: ['ndjson'],
-  validate: (data: unknown) => isArray(data),
+export const NdJson: Serializer<unknown[], JsonMap[]> = {
+  validate: (input: unknown) => isArray(input),
   parse: function (data: string) {
     const lines = data.trim().split('\n');
     return lines.map((line) => JSON.parse(line));
   },
-
   stringify: function (data: unknown[]): string {
     return data.map((item) => JSON.stringify(item, undefined, 0)).join('\n');
   },

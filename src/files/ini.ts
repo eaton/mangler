@@ -1,10 +1,8 @@
 import { parse, stringify } from 'ini';
-import { SimpleSerializer } from './simple-serializer.js';
+import { Serializer } from 'fs-jetpack/types';
 import jetpack from 'fs-jetpack';
 
-export const Ini: SimpleSerializer = {
-  extensions: ['ini'],
-  validate: (data: unknown) => true,
+export const Ini: Serializer = {
   parse,
   stringify,
 };

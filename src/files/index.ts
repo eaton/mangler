@@ -1,4 +1,3 @@
-export * from './simple-serializer.js';
 export * from './json.js';
 export * from './yaml.js';
 export * from './csv.js';

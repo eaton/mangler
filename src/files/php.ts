@@ -1,13 +1,11 @@
 import is from '@sindresorhus/is';
-import { SimpleSerializer } from './simple-serializer.js';
+import { Serializer } from 'fs-jetpack/types';
 
 // reworked from http://phpjs.org/ — gonna add some tests and refactor this eventually
 // but for now, well, it's an unholy abomination and everyone involved should feel bad
 // both that it exists and that it needs to exist.
 
-export const Php: SimpleSerializer = {
-  extensions: [],
-  validate: (data: unknown) => true,
+export const Php: Serializer = {
   parse: unserialize,
   stringify: serialize,
 };

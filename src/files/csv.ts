@@ -1,7 +1,7 @@
-import { SimpleSerializer } from './simple-serializer.js';
 import { stringify, Options as StringifyOptions } from 'csv-stringify/sync';
 import { parse, Options as ParseOptions } from 'csv-parse/sync';
-import is from '@sindresorhus/is';
+import is, { isArray } from '@sindresorhus/is';
+import { Serializer } from 'fs-jetpack/types';
 import jetpack from 'fs-jetpack';
 
 const stringifyOpt: StringifyOptions = {};
@@ -11,9 +11,8 @@ const parseOpt: ParseOptions = {
   cast: true,
 };
 
-export const Csv: SimpleSerializer = {
-  extensions: ['csv'],
-  validate: (data: unknown) => true,
+export const Csv: Serializer = {
+  validate: (data: unknown) => isArray(data),
   parse: (data: string, columns: boolean = true) =>
     parse(data, { ...parseOpt, delimiter: ',', columns }),
   stringify: (input: unknown[]) =>
@@ -25,9 +24,8 @@ export const Csv: SimpleSerializer = {
     }),
 };
 
-export const Tsv: SimpleSerializer = {
-  extensions: ['tsv'],
-  validate: (data: unknown) => true,
+export const Tsv: Serializer = {
+  validate: (data: unknown) => isArray(data),
   parse: (data: string, columns: boolean = true) =>
     parse(data, { ...parseOpt, delimiter: '\t', columns }),
   stringify: (input: unknown[]) =>
