@@ -17,7 +17,14 @@ wrangling.
 - uuid()
 - nanoid()
 
-## Simple Serializers
+## Disk wrapper and serializers
+
+- Disk
+  - dir()
+  - file()
+  - write()
+  - read()
+  - find()
 
 - Csv/Tsv
 - YAML
@@ -71,12 +78,3 @@ wrangling.
 - find()
 - linkify()
 - expand()
-
-## Other Stuff
-
-- Disk
-  - dir()
-  - file()
-  - write()
-  - read()
-  - find()
