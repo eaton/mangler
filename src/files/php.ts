@@ -7,6 +7,7 @@ import { SimpleSerializer } from './simple-serializer.js';
 
 export const Php: SimpleSerializer = {
   extensions: [],
+  validate: (data: unknown) => true,
   parse: unserialize,
   stringify: serialize,
 };
