@@ -1,5 +1,5 @@
-export interface SimpleSerializer<T = unknown> {
+export interface SimpleSerializer<Input = unknown, Output = unknown> {
   extensions: string[];
-  parse(data: string, ...args: unknown[]): T;
-  stringify(data: unknown, ...args: unknown[]): string;
+  parse(data: string, ...args: unknown[]): Output;
+  stringify(data: Input, ...args: unknown[]): string;
 }
