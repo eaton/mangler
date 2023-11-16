@@ -1,6 +1,6 @@
 import path from 'path';
 import { runAppleScript } from 'run-applescript';
-import { Text, Disk } from '../index.js';
+import { Text, Disk } from '../../index.js';
 
 export interface KeynoteSlide {
   number: number;
