@@ -10,13 +10,14 @@ export interface KeynoteSlide {
   body: string;
   notes: string;
   image?: string;
-  textItems?: string[];
+  textItems: string[];
 }
 
 export interface KeynoteDeck {
   id: string;
   name: string;
   file: string;
+  created: string;
   theme: string;
   height: number;
   width: number;
@@ -96,7 +97,7 @@ export class Keynote {
   }
 
   get title() {
-    return this.deck?.name.replace('.key', '') ?? '';
+    return this.deck?.name?.replace('.key', '') ?? '';
   }
 
   get name() {
@@ -105,6 +106,10 @@ export class Keynote {
 
   get file() {
     return this.deck?.file ?? '';
+  }
+
+  get created() {
+    return this.deck?.created;
   }
 
   get theme() {
@@ -296,11 +301,18 @@ export class Keynote {
       set valueDelim to "${valDelimiter}"
       tell application "Keynote"
         set deck to document id i
+        set deckFile to the file of deck
         set p to the file of deck
         
         set v to { i }
         set v to v & the name of deck
         set v to v & the POSIX path of p
+
+        tell application "Finder"
+          set fileDate to (the creation date of file deckFile as string)
+        end tell
+
+        set v to v & fileDate
         set v to v & the name of the document theme of deck
         set v to v & the height of deck
         set v to v & the width of deck
@@ -309,11 +321,12 @@ export class Keynote {
         return v as string
       end tell
     `).then((result) => {
-      const [id, name, file, theme, height, width] = result.split(valDelimiter);
+      const [id, name, file, created, theme, height, width] = result.split(valDelimiter);
       return {
         id,
         name,
         file,
+        created,
         theme,
         height: Number.parseInt(height),
         width: Number.parseInt(width),
