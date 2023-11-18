@@ -10,6 +10,7 @@ export interface KeynoteSlide {
   body: string;
   notes: string;
   image?: string;
+  textItems?: string[];
 }
 
 export interface KeynoteDeck {
@@ -196,19 +197,26 @@ export class Keynote {
     let outputPath = cwd.path();
     switch (format) {
       case 'slide images':
-        outputPath = cwd.dir('images').path();
+        if (opt.allStages) {
+          outputPath = cwd.path('images');
+        } else {
+          outputPath = cwd.path('builds');
+        }
         break;
       case 'HTML':
-        outputPath = cwd.dir('html').path();
+        outputPath = cwd.path('html');
         break;
       case 'PDF':
         outputPath = cwd.path(opt.exportStyle + '.pdf');
         break;
-      case 'Keynote 09':
-        outputPath = cwd.path(opt.exportStyle + '.key');
+      case 'QuickTime movie':
+        outputPath = cwd.path(this.title + '.m4v');
+        break;
+        case 'Keynote 09':
+        outputPath = cwd.path(this.title + '.key');
         break;
       case 'Microsoft PowerPoint':
-        outputPath = cwd.path(opt.exportStyle + '.pptx');
+        outputPath = cwd.path(this.title + '.pptx');
         break;
     }
 
@@ -282,7 +290,7 @@ export class Keynote {
   }
 
   protected async _getDeckInfo(id: string): Promise<KeynoteDeck> {
-    const valDelimiter = '';
+    const valDelimiter = '␞';
     const deck: KeynoteDeck = await runAppleScript(`
       set i to "${id}"
       set valueDelim to "${valDelimiter}"
@@ -317,13 +325,15 @@ export class Keynote {
   }
 
   protected async _getSlides(id: string) {
-    const slideDelimiter = '';
-    const valDelimiter = '';
+    const slideDelimiter = '␝';
+    const valDelimiter = '␞';
+    const itemDelimiter = '␟';
 
     return runAppleScript(`
       set i to "${id}"
       set slideDelim to "${slideDelimiter}"
       set valueDelim to "${valDelimiter}"
+      set itemDelim to "${itemDelimiter}"
 
       tell application "Keynote"
         set ss to {}
@@ -337,6 +347,14 @@ export class Keynote {
           set ss to ss & the object text of the default body item of s
           set ss to ss & the presenter notes of s
 
+          set ti to {}
+          repeat with i from 1 to (the count of items in the text items of s) - 2
+            set ti to ti & the object text of item i of the text items of s
+          end repeat
+
+          set AppleScript's text item delimiters to itemDelim
+          set ss to ss & (ti as string)
+
           set AppleScript's text item delimiters to valueDelim
           set sd to sd & (ss as string)
           set ss to {}
@@ -349,7 +367,7 @@ export class Keynote {
       .then((result) => result.split(slideDelimiter))
       .then((slides) =>
         slides.map((slide) => {
-          const [number, skipped, layout, title, body, notes] =
+          const [number, skipped, layout, title, body, notes, textItems] =
             slide.split(valDelimiter);
           return {
             number: Number.parseInt(number),
@@ -358,6 +376,7 @@ export class Keynote {
             title,
             body,
             notes,
+            textItems: textItems.split(itemDelimiter).filter(t => t.trim().length > 0)
           };
         }),
       );
