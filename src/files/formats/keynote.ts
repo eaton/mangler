@@ -348,6 +348,7 @@ export class Keynote {
           set ss to ss & the presenter notes of s
 
           set ti to {}
+          -- The last two items are dublicates of title and body
           repeat with i from 1 to (the count of items in the text items of s) - 2
             set ti to ti & the object text of item i of the text items of s
           end repeat
