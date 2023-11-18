@@ -198,9 +198,9 @@ export class Keynote {
     switch (format) {
       case 'slide images':
         if (opt.allStages) {
-          outputPath = cwd.path('images');
-        } else {
           outputPath = cwd.path('builds');
+        } else {
+          outputPath = cwd.path('images');
         }
         break;
       case 'HTML':
