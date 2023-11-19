@@ -1,6 +1,6 @@
 import path from 'path';
 import { runAppleScript } from 'run-applescript';
-import { Text, Disk } from '../../index.js';
+import { Text, Disk, Dates } from '../../index.js';
 
 export interface KeynoteSlide {
   number: number;
@@ -326,7 +326,7 @@ export class Keynote {
         id,
         name,
         file,
-        created,
+        created: Dates.fromApple(created).toISOString().split('T')[0],
         theme,
         height: Number.parseInt(height),
         width: Number.parseInt(width),
@@ -381,8 +381,7 @@ export class Keynote {
       .then((result) => result.split(slideDelimiter))
       .then((slides) =>
         slides.map((slide) => {
-          const [number, skipped, layout, title, body, notes, textItems] =
-            slide.split(valDelimiter);
+          const [number, skipped, layout, title, body, notes, textItems] = slide.split(valDelimiter);
           return {
             number: Number.parseInt(number),
             skipped: skipped === 'true',
