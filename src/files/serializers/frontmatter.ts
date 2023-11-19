@@ -4,12 +4,12 @@ import jetpack from 'fs-jetpack';
 import { isObject } from '@sindresorhus/is';
 
 export const Frontmatter: Serializer<
-  GrayMatterFile<string>,
+  { content: string, data: Record<string, unknown> },
   GrayMatterFile<string>
 > = {
   validate: (data: unknown) => isObject(data),
   parse: (input: string) => matter(input),
-  stringify: (input: GrayMatterFile<string>) => {
+  stringify: (input: { content: string, data: Record<string, unknown> }) => {
     const { content, data } = input;
     return matter.stringify(content, data);
   },
