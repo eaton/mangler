@@ -199,6 +199,11 @@ export class Keynote {
       }
     }
 
+    // TODO: the incoming `path` param should control this more directly.
+    // Instead of constructing this and coercing, we should check for an
+    // extension on the incoming path that matches what's about to be
+    // generated, and treat it as authoritative if it seems to be explicit.
+
     let outputPath = cwd.path();
     switch (format) {
       case 'slide images':
@@ -243,55 +248,47 @@ export class Keynote {
     return runAppleScript(scr);
   }
 
+
+  /**
+   * Alter a particular slide's presenter notes.
+   * 
+   * @remarks
+   * 
+   * Keynote's internal numbering can be thrown off if there are skipped slides;
+   * always use the index of the slide in the keynote.slides array, rather than
+   * slide.number. 
+   */
   async setNotes(slide: number, text: string) {
     let scr = `tell application "Keynote" to set the presenter notes of slide ${slide} of document id "${this.id}" to "${text}"`;
-    const newNotes = await runAppleScript(scr);
-    this.deck!.slides[slide].notes = newNotes;
-    return Promise.resolve(newNotes);
+    return runAppleScript(scr).then(newText => this.refresh().then(() => newText));
   }
 
   /**
-   * Export the animation for a single slide. This currently DOES NOT WORK,
-   * because there's no way to specify the start and stop slides or animation
-   * durations when exporting as a Quicktime Movie.
+   * Alter a particular slide's title.
+   * 
+   * @remarks
+   * 
+   * Keynote's internal numbering can be thrown off if there are skipped slides;
+   * always use the index of the slide in the keynote.slides array, rather than
+   * slide.number. 
    */
-  async exportSlideAnimation(
-    slide: number,
-    additionalSlides = 0,
-    options: KeynoteExportOptions = {},
-  ) {
-    const defaults: KeynoteExportOptions = {
-      path: path.resolve('.', this.title),
-      skippedSlides: false,
-      format: 'QuickTime movie',
-      movieCodec: 'h264',
-      movieFormat: 'format720p',
-      movieFramerate: 'FPS24',
-      allStages: true,
-    };
-
-    let { path: dir, format, ...opt } = { ...defaults, ...options };
-    const outputDir = Disk.dir(dir ?? '.').dir('images');
-
-    // Construct the applescript snippet
-    let scr = '';
-    scr += `tell application "Keynote"\n`;
-    scr += `  set deck to document id "${this.id}"\n`;
-    scr += `  set the current slide of deck to slide 1 of deck\n`;
-    scr += `  export deck as ${format} to POSIX file "${outputDir.path()}/${slide
-      .toString()
-      .padStart(3, '0')}.m4v"`;
-    if (Object.entries(opt).length) {
-      scr +=
-        ' with properties { ' +
-        Object.entries(opt)
-          .map(([k, v]) => Text.toCase.none(k) + ':' + v)
-          .join(', ') +
-        ' }\n';
-    }
-    scr += `end tell`;
-    // return runAppleScript(scr);
-    return Promise.resolve(scr);
+  async setTitle(slide: number, text: string) {
+    let scr = `tell application "Keynote" to set the object text of default title item of slide ${slide} of document id "${this.id}" to "${text}"`;
+    return runAppleScript(scr).then(newText => this.refresh().then(() => newText));
+  }
+  
+  /**
+   * Alter a particular slide's body text.
+   * 
+   * @remarks
+   * 
+   * Keynote's internal numbering can be thrown off if there are skipped slides;
+   * always use the index of the slide in the keynote.slides array, rather than
+   * slide.number. 
+   */
+  async setBody(slide: number, text: string) {
+    let scr = `tell application "Keynote" to set the object text of default body item of slide ${slide} of document id "${this.id}" to "${text}"`;
+    return runAppleScript(scr).then(newText => this.refresh().then(() => newText));
   }
 
   protected async _getDeckInfo(id: string): Promise<KeynoteDeck> {
