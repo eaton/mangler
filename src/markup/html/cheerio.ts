@@ -1,11 +1,6 @@
-import is from '@sindresorhus/is';
 import * as cheerio from 'cheerio';
-import {
-  cheerioJsonMapper,
-  getScope,
-  PipeFnMap,
-  JsonTemplate,
-} from 'cheerio-json-mapper';
+import { getPipeFns } from './pipe-functions/index.js';
+import { cheerioJsonMapper, JsonTemplate } from 'cheerio-json-mapper';
 
 export type CheerioInput = Parameters<typeof cheerio.load>[0];
 export type CheerioExtractTemplate = JsonTemplate;
@@ -29,45 +24,10 @@ export async function extract<T extends string | JsonTemplate>(
   template: T,
 ): Promise<MappedReturn<T>> {
   const htmlOrNode = input instanceof Buffer ? input.toString() : input;
-  return cheerioJsonMapper(htmlOrNode, template, { pipeFns }).then(
+  return cheerioJsonMapper(htmlOrNode, template, { pipeFns: getPipeFns() }).then(
     (results) => results as MappedReturn<T>,
   );
 }
-
-const pipeFns: PipeFnMap = {
-  html: ({ $scope, selector, opts, value }) =>
-    getScope($scope, selector, opts).toString(),
-  shift: ({ value }) => (Array.isArray(value) ? value.shift() : void 0),
-  pop: ({ value }) => (Array.isArray(value) ? value.pop() : void 0),
-  index: ({ value, args }) => {
-    if (Array.isArray(value)) {
-      const [idx] = args ?? [];
-      if (is.numericString(idx)) {
-        return value[Number.parseInt(idx)];
-      }
-      return void 0;
-    }
-    return void 0;
-  },
-  replace: ({ value, args }) =>
-    typeof value === 'string'
-      ? value.replaceAll(
-          (args?.[0] as string) ?? '',
-          (args?.[1] as string) ?? '',
-        )
-      : value,
-  split: ({ value, args }) => {
-    if (value !== null && value !== void 0) {
-      const [arg1] = args ?? [];
-      const joiner = arg1?.toString() ?? ' ';
-      return value
-        .toString()
-        .split(joiner)
-        .map((value) => value.trim());
-    }
-    return void 0;
-  },
-};
 
 type MappedReturn<T extends string | unknown[] | Record<string, unknown>> =
   T extends string
