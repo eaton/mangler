@@ -8,23 +8,21 @@ wrangling.
 
 ## Dates
 
-- reformat()
-- fromOffset()
+- reformat() (string date + input format + output format = output string)
+- fromOffset() ('2 days ago...' to fixed date)
+- fromApple() (canned parsing for dates retrieved via applescript)
 - All the stuff from date-fns
 
 ## Ids
 
-- uuid()
-- nanoid()
+- uuid() (generate a random UUID, or a UUID-formatted hash for any object/value)
+- nanoid() (short, url-friendly random ID)
 
 ## Disk wrapper and serializers
 
-- Disk
-  - dir()
-  - file()
-  - write()
-  - read()
-  - find()
+- Disk (wrapper around the fsJetpack library, with custom auto-serializer support)
+
+Serializers for:
 
 - Csv/Tsv
 - YAML
