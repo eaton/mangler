@@ -19,11 +19,13 @@ test('cheerio html', async t => {
   const extracted = await Html.extract(html, {
     title: 'h2',
     body: 'p:has(~ p>img) | html',
+    bodyOuter: 'p:has(~ p>img) | outerHtml',
     image:  'p>img | attr:src',
     alt: 'p>img | attr:alt',
     transcript: 'p:not(:has(>img), :has(~ p>img)) | html'
   });
 
   t.is(extracted.body, '<p>Body</p><p>More body</p>');
+  t.is(extracted.bodyOuter, '<p>Body</p><p>More body</p>');
   t.is(extracted.transcript, '<p>Transcript</p><p>More transcript</p>');
 });
