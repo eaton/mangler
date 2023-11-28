@@ -36,7 +36,7 @@ export interface TextToHtmlOptions {
  * was sometimes done in the olden days of internet text. We may add that option
  * eventually, but for now, yuck.
  */
-export function fromText(text: string, options: TextToHtmlOptions) {
+export function fromText(text: string, options: TextToHtmlOptions = {}) {
   const opt: TextToHtmlOptions = {
     entities: 'utf8',
     paragraphs: true,
