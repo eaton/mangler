@@ -74,7 +74,7 @@
     "date-fns": "^2.30.0",
     "entities": "^4.5.0",
     "filenamify": "^6.0.0",
-    "fs-jetpack": "github:eaton/fs-jetpack#pluggable-serializers",
+    "fs-jetpack": "github:eaton/fs-jetpack",
     "gray-matter": "^4.0.3",
     "html-to-text": "^9.0.5",
     "humanize-url": "^3.0.0",
