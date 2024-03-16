@@ -1,2 +1,4 @@
-import jetpack from 'fs-jetpack';
-export const Disk = jetpack;
+import fsj from 'fs-jetpack';
+
+export type FSJetpack = typeof fsj;
+export const Disk = fsj;
