@@ -5,6 +5,8 @@ export const shift: CheerioPipeFunction = ({ value }) => (Array.isArray(value) ?
 
 export const pop: CheerioPipeFunction = ({ value }) => (Array.isArray(value) ? value.pop() : void 0);
 
+export const count: CheerioPipeFunction = ({ value }) => (Array.isArray(value) || typeof value === 'string' ? value.length : void 0);
+
 export const split: CheerioPipeFunction = ({ value, args }) => {
   if (value !== null && value !== void 0) {
     const [arg1] = args ?? [];
