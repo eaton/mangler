@@ -9,7 +9,7 @@ import { html, outerHtml } from './html-pipes.js';
 
 export function getPipeFns() {
   return { 
-    split, pop, shift, index, count,
+    split, pop, shift, index, count, join, first, last
     html, outerHtml
   }
 }
