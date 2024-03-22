@@ -20,6 +20,20 @@ export const split: CheerioPipeFunction = ({ value, args }) => {
   }
 }
 
+export const join: CheerioPipeFunction = ({ value, args }) => {
+  if (Array.isArray(value)) {
+    const [arg1] = args ?? [];
+    const joiner = arg1?.toString() ?? ' ';
+    return value.map(v => v.toString().trim()).join(joiner)
+  } else {
+    return void 0;
+  }
+}
+
+export const first: CheerioPipeFunction = ({ value }) => (Array.isArray(value) ? value[0] : void 0);
+
+export const last: CheerioPipeFunction = ({ value }) => (Array.isArray(value) ? value[value.length-1] : void 0);
+
 export const index: CheerioPipeFunction = ({ value, args }) => {
   if (Array.isArray(value)) {
     const [idx] = args ?? [];
