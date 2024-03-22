@@ -4,7 +4,7 @@ export {
   getScope
 } from 'cheerio-json-mapper'
 
-import { split, pop, shift, index, count } from './array-pipes.js';
+import { split, pop, shift, index, count, join, first, last  } from './array-pipes.js';
 import { html, outerHtml } from './html-pipes.js';
 
 export function getPipeFns() {
