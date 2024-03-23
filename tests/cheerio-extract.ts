@@ -29,3 +29,15 @@ test('cheerio html', async t => {
   t.is(extracted.bodyOuter, '<p>Body</p><p>More body</p>');
   t.is(extracted.transcript, '<p>Transcript</p><p>More transcript</p>');
 });
+
+test('cheerio collapsed text', async t => {
+  const extracted = await Html.extract('<div><p>Text</p><p>Text</p></div>', {
+    div: 'div',
+    p: 'div.p',
+    joined: 'div.p | join'
+  });
+
+  t.is(extracted.div, 'TextText');
+  t.is(extracted.p, 'TextText');
+  t.is(extracted.joined, 'Text Text');
+});

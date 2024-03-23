@@ -24,9 +24,9 @@ export async function extract<T extends string | JsonTemplate>(
   template: T,
 ): Promise<MappedReturn<T>> {
   const htmlOrNode = input instanceof Buffer ? input.toString() : input;
-  return cheerioJsonMapper(htmlOrNode, template, { pipeFns: getPipeFns() }).then(
-    (results) => results as MappedReturn<T>,
-  );
+  return cheerioJsonMapper(htmlOrNode, template, {
+    pipeFns: getPipeFns(),
+  }).then((results) => results as MappedReturn<T>);
 }
 
 type MappedReturn<T extends string | unknown[] | Record<string, unknown>> =

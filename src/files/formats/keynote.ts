@@ -222,7 +222,7 @@ export class Keynote {
       case 'QuickTime movie':
         outputPath = cwd.path(this.title + '.m4v');
         break;
-        case 'Keynote 09':
+      case 'Keynote 09':
         outputPath = cwd.path(this.title + '.key');
         break;
       case 'Microsoft PowerPoint':
@@ -248,47 +248,52 @@ export class Keynote {
     return runAppleScript(scr);
   }
 
-
   /**
    * Alter a particular slide's presenter notes.
-   * 
+   *
    * @remarks
-   * 
+   *
    * Keynote's internal numbering can be thrown off if there are skipped slides;
    * always use the index of the slide in the keynote.slides array, rather than
-   * slide.number. 
+   * slide.number.
    */
   async setNotes(slide: number, text: string) {
     let scr = `tell application "Keynote" to set the presenter notes of slide ${slide} of document id "${this.id}" to "${text}"`;
-    return runAppleScript(scr).then(newText => this.refresh().then(() => newText));
+    return runAppleScript(scr).then((newText) =>
+      this.refresh().then(() => newText),
+    );
   }
 
   /**
    * Alter a particular slide's title.
-   * 
+   *
    * @remarks
-   * 
+   *
    * Keynote's internal numbering can be thrown off if there are skipped slides;
    * always use the index of the slide in the keynote.slides array, rather than
-   * slide.number. 
+   * slide.number.
    */
   async setTitle(slide: number, text: string) {
     let scr = `tell application "Keynote" to set the object text of default title item of slide ${slide} of document id "${this.id}" to "${text}"`;
-    return runAppleScript(scr).then(newText => this.refresh().then(() => newText));
+    return runAppleScript(scr).then((newText) =>
+      this.refresh().then(() => newText),
+    );
   }
-  
+
   /**
    * Alter a particular slide's body text.
-   * 
+   *
    * @remarks
-   * 
+   *
    * Keynote's internal numbering can be thrown off if there are skipped slides;
    * always use the index of the slide in the keynote.slides array, rather than
-   * slide.number. 
+   * slide.number.
    */
   async setBody(slide: number, text: string) {
     let scr = `tell application "Keynote" to set the object text of default body item of slide ${slide} of document id "${this.id}" to "${text}"`;
-    return runAppleScript(scr).then(newText => this.refresh().then(() => newText));
+    return runAppleScript(scr).then((newText) =>
+      this.refresh().then(() => newText),
+    );
   }
 
   protected async _getDeckInfo(id: string): Promise<KeynoteDeck> {
@@ -318,7 +323,8 @@ export class Keynote {
         return v as string
       end tell
     `).then((result) => {
-      const [id, name, file, created, theme, height, width] = result.split(valDelimiter);
+      const [id, name, file, created, theme, height, width] =
+        result.split(valDelimiter);
       return {
         id,
         name,
@@ -378,7 +384,8 @@ export class Keynote {
       .then((result) => result.split(slideDelimiter))
       .then((slides) =>
         slides.map((slide) => {
-          const [number, skipped, layout, title, body, notes, textItems] = slide.split(valDelimiter);
+          const [number, skipped, layout, title, body, notes, textItems] =
+            slide.split(valDelimiter);
           return {
             number: Number.parseInt(number),
             skipped: skipped === 'true',
@@ -386,7 +393,9 @@ export class Keynote {
             title,
             body,
             notes,
-            textItems: textItems.split(itemDelimiter).filter(t => t.trim().length > 0)
+            textItems: textItems
+              .split(itemDelimiter)
+              .filter((t) => t.trim().length > 0),
           };
         }),
       );

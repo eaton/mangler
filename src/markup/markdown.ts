@@ -16,7 +16,7 @@ export function fromHtml(input: string, options: TurndownService.Options = {}) {
     headingStyle: 'atx',
     bulletListMarker: '-',
     codeBlockStyle: 'fenced',
-    ...options
+    ...options,
   });
   return turndownService.turndown(input);
 }

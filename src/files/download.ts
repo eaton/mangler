@@ -1,7 +1,7 @@
-import { Readable } from "stream";
-import { ReadableStream } from "stream/web";
+import { Readable } from 'stream';
+import { ReadableStream } from 'stream/web';
 import { finished } from 'stream/promises';
-import { Disk } from "./disk.js";
+import { Disk } from './disk.js';
 
 /**
  * Download the contents of a URL to a local file.

@@ -35,7 +35,8 @@
       "ts": "module"
     },
     "nodeArguments": [
-      "--loader=ts-node/esm"
+      "--loader=tsx",
+      "--no-warnings"
     ]
   },
   "repository": {
@@ -95,6 +96,7 @@
     "superstruct": "^1.0.3",
     "text-case": "^1.0.9",
     "textile-js": "^2.1.1",
+    "tsx": "^4.7.1",
     "turndown": "^7.1.2",
     "url-unshort": "^6.1.0",
     "uuid": "^9.0.1",
