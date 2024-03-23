@@ -14,7 +14,7 @@ import {
   first,
   last,
 } from './array-pipes.js';
-import { html, outerHtml, padAndFlip } from './html-pipes.js';
+import { html, outerHtml, pad } from './html-pipes.js';
 
 export function getPipeFns() {
   return {
@@ -28,6 +28,6 @@ export function getPipeFns() {
     last,
     html,
     outerHtml,
-    padAndFlip
+    pad
   };
 }

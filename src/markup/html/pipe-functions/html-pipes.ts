@@ -9,9 +9,9 @@ export const outerHtml: CheerioPipeFunction = ({
 
 export const html = outerHtml;
 
-export const padAndFlip: CheerioPipeFunction = ({
+export const pad: CheerioPipeFunction = ({
   $scope,
   selector,
   opts,
-  value,
-}) => getScope($scope, selector, opts).contents().append(' ').toArray().reverse();
+  args
+}) => getScope($scope, selector, opts).contents().append(args?.toString() ?? ' ');
