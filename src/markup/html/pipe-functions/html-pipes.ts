@@ -14,4 +14,4 @@ export const pad: CheerioPipeFunction = ({
   selector,
   opts,
   args
-}) => getScope($scope, selector, opts).contents().append(args?.toString() ?? ' ');
+}) => getScope($scope, selector, opts).contents().append(args?.[0]?.toString() ?? ' ');
