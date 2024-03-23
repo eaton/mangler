@@ -7,4 +7,11 @@ export const outerHtml: CheerioPipeFunction = ({
   value,
 }) => getScope($scope, selector, opts).toString();
 
+export const contents: CheerioPipeFunction = ({
+  $scope,
+  selector,
+  opts,
+  value,
+}) => getScope($scope, selector, opts).contents();
+
 export const html = outerHtml;

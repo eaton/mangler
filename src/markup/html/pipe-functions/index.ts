@@ -14,7 +14,7 @@ import {
   first,
   last,
 } from './array-pipes.js';
-import { html, outerHtml } from './html-pipes.js';
+import { contents, html, outerHtml } from './html-pipes.js';
 
 export function getPipeFns() {
   return {
@@ -26,6 +26,7 @@ export function getPipeFns() {
     join,
     first,
     last,
+    contents,
     html,
     outerHtml,
   };
