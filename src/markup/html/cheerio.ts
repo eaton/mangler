@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
 import { getPipeFns } from './pipe-functions/index.js';
-import { cheerioJsonMapper, JsonTemplate } from 'cheerio-json-mapper';
+import { cheerioJsonMapper, JsonTemplate, JsonTemplateObject, PipeFnMap } from 'cheerio-json-mapper';
 
 export type CheerioInput = Parameters<typeof cheerio.load>[0];
 export type CheerioExtractTemplate = JsonTemplate;
@@ -22,16 +22,15 @@ export function toCheerio(
 export async function extract<T extends string | JsonTemplate>(
   input: string | Buffer | cheerio.AnyNode | cheerio.Cheerio<cheerio.AnyNode>,
   template: T,
+  pipes?: PipeFnMap
 ): Promise<MappedReturn<T>> {
   const htmlOrNode = input instanceof Buffer ? input.toString() : input;
   return cheerioJsonMapper(htmlOrNode, template, {
-    pipeFns: getPipeFns(),
+    pipeFns: { ...getPipeFns(), ...pipes ?? {} },
   }).then((results) => results as MappedReturn<T>);
 }
 
-type MappedReturn<T extends string | unknown[] | Record<string, unknown>> =
-  T extends string
-    ? unknown
-    : T extends unknown[]
-    ? unknown[]
-    : Record<string, unknown>;
+type MappedReturn<T extends string | JsonTemplateObject[] | JsonTemplateObject> =
+  (T extends string ? unknown :
+    (T extends JsonTemplateObject[] ? Record<string, unknown>[] :
+      Record<string, unknown>));
