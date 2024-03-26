@@ -1,5 +1,5 @@
 import { isString } from '@sindresorhus/is';
-import { Serializer } from 'fs-jetpack/types';
+import { Serializer } from '@eatonfyi/fs-jetpack/types';
 
 export const Base64: Serializer<string, string> = {
   validate: (data: unknown) => isString(data),

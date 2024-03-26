@@ -1,7 +1,7 @@
 import { JsonMap } from '@iarna/toml/index.js';
-import { Serializer } from 'fs-jetpack/types';
+import { Serializer } from '@eatonfyi/fs-jetpack/types';
 import JSON5 from 'json5';
-import jetpack from 'fs-jetpack';
+import jetpack from '@eatonfyi/fs-jetpack';
 import { isArray } from '@sindresorhus/is';
 
 export const Json: Serializer = {

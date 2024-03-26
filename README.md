@@ -13,11 +13,6 @@ wrangling.
 - fromApple() (canned parsing for dates retrieved via applescript)
 - All the stuff from date-fns
 
-## Ids
-
-- uuid() (generate a random UUID, or a UUID-formatted hash for any object/value)
-- nanoid() (short, url-friendly random ID)
-
 ## Disk wrapper and serializers
 
 - Disk (wrapper around the fsJetpack library, with custom auto-serializer support)
@@ -59,8 +54,6 @@ Serializers for:
 ## Complex file types
 
 - Keynote
-- PDF (very limited pdfjs wrapper; need to move to a custom one)
-- Image (via sharp library)
 
 ## Text
 

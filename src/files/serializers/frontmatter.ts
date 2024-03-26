@@ -1,7 +1,7 @@
 import matter, { GrayMatterFile } from 'gray-matter';
 import { encode, decode } from 'entities';
-import { Serializer } from 'fs-jetpack/types';
-import jetpack from 'fs-jetpack';
+import { Serializer } from '@eatonfyi/fs-jetpack/types';
+import jetpack from '@eatonfyi/fs-jetpack';
 import { isObject } from '@sindresorhus/is';
 
 export type FrontmatterInput = {

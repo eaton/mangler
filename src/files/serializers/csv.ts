@@ -1,8 +1,8 @@
 import { stringify, Options as StringifyOptions } from 'csv-stringify/sync';
 import { parse, Options as ParseOptions } from 'csv-parse/sync';
 import is, { isArray } from '@sindresorhus/is';
-import { Serializer } from 'fs-jetpack/types';
-import jetpack from 'fs-jetpack';
+import { Serializer } from '@eatonfyi/fs-jetpack/types';
+import jetpack from '@eatonfyi/fs-jetpack';
 
 const stringifyOpt: StringifyOptions = {};
 

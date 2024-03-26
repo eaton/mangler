@@ -1,5 +1,5 @@
 import is from '@sindresorhus/is';
-import { Serializer } from 'fs-jetpack/types';
+import { Serializer } from '@eatonfyi/fs-jetpack/types';
 
 // reworked from http://phpjs.org/ — gonna add some tests and refactor this eventually
 // but for now, well, it's an unholy abomination and everyone involved should feel bad

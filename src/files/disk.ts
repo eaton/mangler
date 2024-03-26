@@ -1,2 +1,2 @@
-import fsj from 'fs-jetpack';
+import fsj from '@eatonfyi/fs-jetpack';
 export const Disk = fsj;
